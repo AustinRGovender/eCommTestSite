@@ -1,0 +1,311 @@
+/* General styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 400;
+    color: #6200ea;
+    letter-spacing: -0.5px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #6200ea;
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #6200ea;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+main {
+    padding: 20px;
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Grid */
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.product-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.product-card h3 {
+    margin: 12px 0 8px;
+    font-size: 20px;
+    color: #333;
+}
+
+.product-card .price {
+    font-size: 18px;
+    color: #6200ea;
+}
+
+.product-card .description {
+    font-size: 14px;
+    color: #666;
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    margin: 15% auto;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.modal-content img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.modal-content p {
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-content .close:hover {
+    color: #333;
+}
+
+.modal-content input {
+    margin-top: 8px;
+}
+
+.modal-content button {
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+    background-color: #3700b3;
+}
+
+/* Additional styles for the contact page */
+.contact-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.contact-form label {
+    display: block;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+    margin-top: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+    border-color: #6200ea;
+    box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.2);
+    outline: none;
+}
+
+/* .contact-form input.required,
+.contact-form select.required,
+.contact-form textarea.required {
+    border-color: #b00020;
+} */
+
+.contact-form input.required:focus,
+.contact-form select.required:focus,
+.contact-form textarea.required:focus {
+    border-color: #b00020;
+    box-shadow: 0 0 0 2px rgba(176, 0, 32, 0.2);
+}
+
+.contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.contact-form button {
+    background-color: #6200ea;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #3700b3;
+}
+
+.contact-form .error {
+    color: #b00020;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+
+.contact-form select {
+    cursor: pointer;
+}
+.contact-form .error-field {
+border-color: #b00020;
+}
