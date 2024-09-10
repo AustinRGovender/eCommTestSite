@@ -24,15 +24,20 @@ To run a this Lighthouse test, use:
 
 ```bash
 lighthouse https://austinrgovender.github.io/eCommTestSite/ --output html --output-path ./lighthouse-report.html --chrome-flags="--headless" 
+```
 
-OR
+**OR**
 
+```bash
 node lighthouse-test.js
 ```
 
-Explanation:
+### Explanation:
 
-https://austinrgovender.github.io/eCommTestSite/: The URL of the site you want to test.
---output html: Specifies that the output should be in HTML format.
---output-path ./lighthouse-report.html: Path where the report will be saved.
---chrome-flags="--headless": Runs Chrome in headless mode (no UI).
+1. **https://austinrgovender.github.io/eCommTestSite/**: The URL of the site you want to test.
+
+2. **--output html**: Specifies that the output should be in HTML format.
+
+3. **--output-path ./lighthouse-report.html**: Path where the report will be saved.
+
+4. **--chrome-flags="--headless"**: Runs Chrome in headless mode (no UI).
