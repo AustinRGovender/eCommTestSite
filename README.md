@@ -28,7 +28,7 @@ lighthouse https://austinrgovender.github.io/eCommTestSite/ --output html --outp
 OR
 
 node lighthouse-test.js
-
+```
 
 Explanation:
 
