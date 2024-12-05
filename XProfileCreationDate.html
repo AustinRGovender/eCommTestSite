@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Profile Age Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        .result.error {
+            color: red;
+        }
+        .result.success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Twitter Profile Age Checker</h1>
+        <input type="text" id="twitterUsername" placeholder="Enter Twitter username (e.g., AustinRG07)" />
+        <button onclick="checkTwitterProfileAge()">Check Age</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        async function checkTwitterProfileAge() {
+            const username = document.getElementById('twitterUsername').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = ''; // Clear previous results
+
+            if (!username) {
+                resultDiv.textContent = 'Please enter a Twitter username.';
+                resultDiv.className = 'result error';
+                return;
+            }
+
+            // API URL for Twitter Profile Data
+            const apiUrl = `https://api.twitter.com/2/users/by/username/${username}?user.fields=created_at`;
+            const corsProxyUrl = "https://cors-anywhere.herokuapp.com/"; // CORS Proxy URL
+
+            try {
+                resultDiv.textContent = 'Checking...';
+                resultDiv.className = 'result';
+
+                // Fetch data from the API through CORS Proxy
+                const response = await fetch(corsProxyUrl + apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer AAAAAAAAAAAAAAAAAAAAAO%2BExQEAAAAAXpEhU5kMtUxVdRJinpzQ5wrrGls%3DQ7QBYRYdchUyU0bWILrEKUEbRZmHcu3Wie8q2KSe7hZwNjgveX`, // Replace with your Bearer Token
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error fetching Twitter data: ${response.status}`);
+                }
+
+                // Parse the response JSON
+                const data = await response.json();
+                const creationDate = data.data.created_at; // Account creation date
+
+                if (!creationDate) {
+                    resultDiv.textContent = 'Could not fetch profile creation date.';
+                    resultDiv.className = 'result error';
+                    return;
+                }
+
+                // Convert the creation date to a human-readable format
+                const readableCreationDate = new Date(creationDate).toUTCString();
+
+                // Calculate the profile's age in years
+                const currentDate = new Date();
+                const ageInMilliseconds = currentDate - new Date(creationDate);
+                const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365);
+
+                // Display the results
+                resultDiv.innerHTML = `
+                    <p>The profile was created on: <strong>${readableCreationDate}</strong></p>
+                    <p>The profile is approximately <strong>${ageInYears.toFixed(2)}</strong> years old.</p>
+                `;
+                resultDiv.className = 'result success';
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+    </script>
+
+</body>
+</html>
