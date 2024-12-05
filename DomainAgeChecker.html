@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Age Checker</title>
+    <style>
+        /* Reset and Base Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Container Styling */
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Input Styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            font-size: 1rem;
+        }
+        input[type="text"]::placeholder {
+            color: #ccc;
+        }
+
+        /* Button Styling */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #4caf50;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+
+        /* Result Styling */
+        .result {
+            margin-top: 20px;
+            font-size: 1rem;
+            text-align: left;
+        }
+        .result strong {
+            color: #ffeb3b;
+        }
+
+        /* Error Styling */
+        .error {
+            color: #ff5722;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            button {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Website Age Checker</h1>
+        <input type="text" id="websiteInput" placeholder="Enter website URL (e.g., example.com)" />
+        <button onclick="checkWebsiteAge()">Check Age</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function convertUnixToReadableDate(timestamp) {
+            const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+            return date.toUTCString(); // Convert to a readable date format
+        }
+
+        async function checkWebsiteAge() {
+            const websiteInput = document.getElementById('websiteInput').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = ''; // Clear previous results
+
+            if (!websiteInput) {
+                resultDiv.textContent = 'Please enter a website URL.';
+                resultDiv.className = 'result error';
+                return;
+            }
+
+            const whoisApiUrl = `https://api.api-ninjas.com/v1/whois?domain=${websiteInput}`;
+            const apiKey = 'SkttVlSHo+9UTbMS6Pw+dg==uY8Wij1Udok7hsVm'; // Replace with your WHOIS API key.
+
+            try {
+                resultDiv.textContent = 'Checking...';
+                resultDiv.className = 'result';
+
+                const response = await fetch(whoisApiUrl, {
+                    headers: {
+                        'X-Api-Key': apiKey
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error fetching WHOIS data: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const creationDateUnix = data.creation_date[0]; // Use the first timestamp from the array
+
+                if (!creationDateUnix) {
+                    resultDiv.textContent = 'Could not fetch website creation date.';
+                    resultDiv.className = 'result error';
+                    return;
+                }
+
+                const readableCreationDate = convertUnixToReadableDate(creationDateUnix);
+                const currentDate = new Date();
+                const creationDate = new Date(creationDateUnix * 1000);
+                const ageInMilliseconds = currentDate - creationDate;
+                const ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365);
+
+                resultDiv.innerHTML = `
+                    <p>The website was created on: <strong>${readableCreationDate}</strong></p>
+                    <p>The website is approximately <strong>${ageInYears.toFixed(2)}</strong> years old.</p>
+                `;
+                resultDiv.className = 'result';
+            } catch (error) {
+                resultDiv.textContent = `Error: ${error.message}`;
+                resultDiv.className = 'result error';
+            }
+        }
+    </script>
+</body>
+</html>
